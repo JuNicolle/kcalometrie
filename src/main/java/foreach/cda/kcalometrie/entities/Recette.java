@@ -45,7 +45,7 @@ public class Recette {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User Creator;
+    private User creator;
 
     @OneToMany(mappedBy = "recette")
     private List<RecetteIngredient> composition = new ArrayList<>();

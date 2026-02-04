@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Table(name = "users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "user_id")
     private Integer userId;
@@ -45,11 +48,11 @@ public class User {
     @ManyToMany
     @JoinTable(
         name="favorite",
-        joinColumns = @JoinColumn(name="user_id")
-        ,inverseJoinColumns = @JoinColumn(name="recette_id"))
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="recette_id"))
 
-        private ArrayList<Recette> favoriteRecettes = new ArrayList<>();
+        private List<Recette> favoriteRecettes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "Creator")
+    @OneToMany(mappedBy = "creator")
     private List<Recette> personalRecette = new ArrayList<>();
 }
