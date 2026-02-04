@@ -1,11 +1,20 @@
 package foreach.cda.kcalometrie.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @Getter
 @Setter
@@ -15,13 +24,13 @@ import lombok.Setter;
 public class User {
     @Id
 
-    @Column(name = "userId")
+    @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "userName")
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "firstName")
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "role")
@@ -33,5 +42,14 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @ManyToMany
+    @JoinTable(
+        name="favorite",
+        joinColumns = @JoinColumn(name="user_id")
+        ,inverseJoinColumns = @JoinColumn(name="recette_id"))
 
+        private ArrayList<Recette> favoriteRecettes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "Creator")
+    private List<Recette> personalRecette = new ArrayList<>();
 }
